@@ -1,0 +1,27 @@
+/* body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+.search-container {
+    position: absolute;
+    width: 400px;
+    height: 40px;
+    transform: translate(0, -300px);
+    background: rgba(0, 64, 128, .2);
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.search-input{
+    width: 300px;
+    height: 40px;
+}
+
+.search-buttom{
+    transform: translate(30px, 0);
+} */
