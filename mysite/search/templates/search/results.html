@@ -10,13 +10,11 @@
     <ul>
         <h2> 每頁顯示20個商品，共{{ group_number }}頁，目前在第{{ page }}頁 </h2>
 
-        <!-- {% for product in products %}
-            {% for prod in product %}
-                <li>
-                    <a href="{{ product.url }}" target="_blank">{{ product.name }}</a> - {{ product.price }} 元
-                </li>
-            {% endfor %}
-        {% endfor %} -->
+        {% for product in products %}
+            <li>
+                <a href="{{ product.url }}" target="_blank">{{ product.name }}</a> - {{ product.price }} 元
+            </li>
+        {% endfor %}
     </ul>
     <a href="{% url 'search_product' %}">Search Again</a>
 </body>
