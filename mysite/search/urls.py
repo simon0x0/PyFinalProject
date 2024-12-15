@@ -6,5 +6,8 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('page/<int:page>', views.switch_page, name='switch_page')
+    path('page/', views.switch_page, name='switch_page')
+]
+urlpatterns += [
+    path('page/<int:page>/', views.switch_page, name='switch_page')
 ]

@@ -1,26 +1,25 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Product
 from .pchome_crawler import pchomeCrawler
+
 # Create your views here.
+
+product_list = []
 
 def search_product(request):
     if request.method == 'POST':
+        global product_list
+        product_list = [] # 清空商品資訊
         query = request.POST.get('query')
         product_list = pchomeCrawler(query)
-        product_number = len(product_list)
-        grouped_product_list = [] # 每20個分一組
-        for i in range(0, product_number, 20):
-            grouped_product_list.append(product_list[i: min(i+20, product_number)])
-        if len(grouped_product_list) == 0:
-            print('沒找到該商品')
-            return render(request, 'search/search.html')
-        context = {
-            'products': grouped_product_list[0], 
-            'group_number': len(grouped_product_list),
-            'page': 1
-        }
-        return render(request, 'search/results.html', context)
+        return redirect(switch_page, page=1)
     return render(request, 'search/search.html')
 
-def switch_page(request):
-    return render(request, 'search/search.html')
+def switch_page(request, page = 1):
+    total_page = (len(product_list)+19)//20
+    context = {
+        'products': product_list[20*(page-1):min(20*page, len(product_list))], 
+        'total_page': total_page,
+        'page': page
+    }
+    return render(request, 'search/results.html', context)

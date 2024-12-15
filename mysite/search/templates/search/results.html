@@ -8,10 +8,17 @@
 <body>
     <h1>Search Results</h1>
     <ul>
-        <h2> 每頁顯示20個商品，共{{ group_number }}頁，目前在第{{ page }}頁 </h2>
+        <h2> 每頁顯示20個商品，共{{ total_page }}頁，目前在第{{ page }}頁 </h2>
+        {% if page > 1 %}
+        <a href="{% url 'switch_page' page=page|add:-1 %}"> 切換至上一頁</a>
+        {% endif %}
+        {% if total_page > page %}
+        <a href="{% url 'switch_page' page=page|add:1 %}"> 切換至下一頁</a>
+        {% endif %}
 
         {% for product in products %}
             <li>
+                <img src="{{ product.pic }}" alt="{{ product.name }}" style="max-width: 200px; max-height: 200px;">
                 <a href="{{ product.url }}" target="_blank">{{ product.name }}</a> - {{ product.price }} 元
             </li>
         {% endfor %}
