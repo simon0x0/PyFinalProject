@@ -16,6 +16,13 @@
         <a href="{% url 'switch_page' page=page|add:1 %}"> 切換至下一頁</a>
         {% endif %}
 
+        <form action="{% url 'switch_page' %}" method="get">
+            <label for="jump_page">跳轉至頁數：</label>
+            <input type="number" id="jump_page" name="page" min="1" max="{{ total_page }}" value="{{ page }}">
+            <button type="submit">跳轉</button>
+        </form>
+
+
         {% for product in products %}
             <li>
                 <img src="{{ product.pic }}" alt="{{ product.name }}" style="max-width: 200px; max-height: 200px;">

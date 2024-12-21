@@ -17,7 +17,7 @@ def pchomeCrawler(query):
         totalPage = data['totalPage']
         product_list = []
         for _ in range(1, totalPage+1): # 每一頁
-            if _ >= 3: # 測試用
+            if _ > 3: # 測試用
                 break
             newPage = url + f'&page={_}'
             response = requests.get(newPage, headers=header)
