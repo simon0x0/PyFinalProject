@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Product
 from .pchome_crawler import pchomeCrawler
+from .momo_crawler import get_content
 
 # Create your views here.
 
@@ -17,6 +18,8 @@ def search_product(request):
         product_list = [] # 清空商品資訊
         query = request.POST.get('query')
         product_list = pchomeCrawler(query)
+        product_list += get_content(query)
+        print(get_content(query))
 
         min_price = request.POST.get('min_price', '')
         max_price = request.POST.get('max_price', '')

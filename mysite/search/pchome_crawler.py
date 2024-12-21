@@ -2,6 +2,7 @@ import requests # 訪問網站
 from bs4 import BeautifulSoup # 解析html
 from .models import Product
 
+
 def pchomeCrawler(query):
     query = query.replace(' ', '%20')
     url = f'https://ecshweb.pchome.com.tw/search/v3.3/all/results?q={query}'
