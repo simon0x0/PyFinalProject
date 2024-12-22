@@ -19,10 +19,10 @@ def search_product(request):
         query = request.POST.get('query')
         product_list = pchomeCrawler(query)
         product_list += get_content(query)
-        print(get_content(query))
 
         min_price = request.POST.get('min_price', '')
         max_price = request.POST.get('max_price', '')
+        print(min_price, max_price)
         if min_price and max_price:
             product_list = [product for product in product_list if product.price >= int(min_price) and product.price <= int(max_price)]
         elif min_price:
@@ -34,7 +34,7 @@ def search_product(request):
         return redirect(switch_page, page=1)
     return render(request, 'search/search.html')
 
-def switch_page(request, page = 1):
+def switch_page(request, page = 1, order=1):
     total_page = (len(product_list)+19)//20
     # 取得頁數參數，並將其限制在有效範圍內
     try:
@@ -46,9 +46,15 @@ def switch_page(request, page = 1):
     except ValueError:
         page = 1  # 如果頁數無效，默認為第 1 頁
 
+    if order == 1:
+        product_list.sort(key=asorder)
+    elif order == 2:
+        product_list.sort(key=asorder, reverse=True)
+
     context = {
         'products': product_list[20*(page-1):min(20*page, len(product_list))], 
         'total_page': total_page,
-        'page': page
+        'page': page,
+        'order' : order
     }
     return render(request, 'search/results.html', context)

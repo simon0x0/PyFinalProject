@@ -6,21 +6,32 @@
     <title>Search Results</title>
 </head>
 <body>
-    <h1>Search Results</h1>
+    <h1>搜尋結果</h1>
     <ul>
         <h2> 每頁顯示20個商品，共{{ total_page }}頁，目前在第{{ page }}頁 </h2>
         {% if page > 1 %}
-        <a href="{% url 'switch_page' page=page|add:-1 %}"> 切換至上一頁</a>
+        <a href="{% url 'switch_page' page=page|add:-1 order=order %}"> 切換至上一頁</a>
         {% endif %}
         {% if total_page > page %}
-        <a href="{% url 'switch_page' page=page|add:1 %}"> 切換至下一頁</a>
+        <a href="{% url 'switch_page' page=page|add:1 order=order %}"> 切換至下一頁</a>
         {% endif %}
 
-        <form action="{% url 'switch_page' %}" method="get">
+        <form action="{% url 'switch_page' page=page order=order %}" method="get">
             <label for="jump_page">跳轉至頁數：</label>
             <input type="number" id="jump_page" name="page" min="1" max="{{ total_page }}" value="{{ page }}">
+            <input type="hidden" name="order" value="{{ order }}">
             <button type="submit">跳轉</button>
         </form>
+
+        <div>
+            <h3>切換排序：</h3>
+            <a href="{% url 'switch_page' page=1 order=1 %}">
+                <button>升序</button>
+            </a>
+            <a href="{% url 'switch_page' page=1 order=2 %}">
+                <button>降序</button>
+            </a>
+        </div>
 
 
         {% for product in products %}
